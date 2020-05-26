@@ -16,3 +16,8 @@ class Mastermind:
                 else:
                     board[i].append(0)
         return board
+    
+    def backspace_row(self):
+        self.board_game[self.actual_pos-1][1:5]=0
+    
+    
