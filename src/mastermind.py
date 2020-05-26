@@ -1,3 +1,5 @@
+import random
+
 class Mastermind:
     def __init__(self):
         self.board_color = [1,2,3,4,5,6]
@@ -33,3 +35,8 @@ class Mastermind:
     
     def add_color_row(self,color,pos):
         self.board_game[self.actual_pos-1][pos] = color
+    
+    def push_hidden_random(self):
+        for i in range(4):
+            self.board_hidden.append(random.choice(self.board_color))
+        
