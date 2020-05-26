@@ -34,7 +34,6 @@ class Mastermind:
                     self.board_game[self.actual_pos-1][i+4] = -1
                     break
                 j+=1
-        self.actual_pos+=1
     
     def add_color_row(self,color,pos):
         self.board_game[self.actual_pos-1][pos] = color
@@ -42,3 +41,13 @@ class Mastermind:
     def push_hidden_random(self):
         for i in range(4):
             self.board_hidden.append(random.choice(self.board_color))
+    
+    def victory_condition(self):
+        if self.actual_pos > 10:
+            return False
+        elif (self.board_game[self.actual_pos-1][5:9] == [1,1,1,1]):
+            return True
+        else :
+            self.actual_pos+=1
+            return False
+        
