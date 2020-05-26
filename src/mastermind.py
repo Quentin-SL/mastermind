@@ -18,6 +18,16 @@ class Mastermind:
         return board
     
     def backspace_row(self):
-        self.board_game[self.actual_pos-1][1:5]=0
+        self.board_game[self.actual_pos-1][1:5] = 0
     
+    def test_row(self):
+        for i in range(1,5):
+            while j < len(self.board_hidden):
+                if self.board_game[self.actual_pos-1][i] == self.board_hidden[i-1]:
+                    self.board_game[self.actual_pos-1][i+4] = 1
+                    break
+                elif self.board_game[self.actual_pos-1][i] == self.board_hidden[j]:
+                    self.board_game[self.actual_pos-1][i+4] = -1
+                    break
+                j+=1
     
