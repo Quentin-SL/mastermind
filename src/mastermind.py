@@ -24,6 +24,7 @@ class Mastermind:
     
     def test_row(self):
         for i in range(1,5):
+            j = 0
             while j < len(self.board_hidden):
                 if self.board_game[self.actual_pos-1][i] == self.board_hidden[i-1]:
                     self.board_game[self.actual_pos-1][i+4] = 1
@@ -39,4 +40,3 @@ class Mastermind:
     def push_hidden_random(self):
         for i in range(4):
             self.board_hidden.append(random.choice(self.board_color))
-        
