@@ -20,7 +20,8 @@ class Mastermind:
         return board
     
     def backspace_row(self):
-        self.board_game[self.actual_pos-1][1:5] = 0
+        for i in range(1,5):
+            self.board_game[self.actual_pos-1][i] = 0
     
     def test_row(self):
         for i in range(1,5):
@@ -33,6 +34,7 @@ class Mastermind:
                     self.board_game[self.actual_pos-1][i+4] = -1
                     break
                 j+=1
+        self.actual_pos+=1
     
     def add_color_row(self,color,pos):
         self.board_game[self.actual_pos-1][pos] = color
