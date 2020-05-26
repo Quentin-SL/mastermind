@@ -31,3 +31,5 @@ class Mastermind:
                     break
                 j+=1
     
+    def add_color_row(self,color,pos):
+        self.board_game[self.actual_pos-1][pos] = color
