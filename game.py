@@ -24,6 +24,17 @@ def define_number() :
     return array
 
 
+def define_color() :
+    array = []
+    for i in range(10) :
+        array.append([])
+        for j in range(4) :
+            array[i].append(Canvas(ROOT, background = "#B2C2BB"))
+            array[i][j].place(relx = 0.135 + 0.035 * j, y = 100 + 52 * i, height = 50, width = 50)
+            array[i][j].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
+    return array
+
+
 
 
 ROOT.mainloop()
