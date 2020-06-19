@@ -43,7 +43,7 @@ class Mastermind:
             self.board_hidden.append(random.choice(self.board_color))
     
     def victory_condition(self):
-        elif (self.board_game[self.actual_pos-1][5:9] == [1,1,1,1]):
+        if (self.board_game[self.actual_pos-1][5:9] == [1,1,1,1]):
             return True
         else :
             self.actual_pos+=1
