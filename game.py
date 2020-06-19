@@ -34,7 +34,31 @@ def define_color() :
             array[i][j].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
     return array
 
-
+def define_hint() :
+    array = []
+    for i in range(10) :
+        array.append([])
+        for j in range(5) :
+            if j == 0:
+                array[i].append(Canvas(ROOT, background = "#B2C2BB"))
+                array[i][j].place(relx = 0.2755, y = 100 + 52 * i, height = 50, width = 50)
+            if j == 1:
+                array[i].append(Canvas(array[i][0], background = "#B2C2BB"))
+                array[i][j].place(x = 0, y = 0, height = 25, width = 25)
+                array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
+            if j == 2:
+                array[i].append(Canvas(array[i][0], background = "#B2C2BB"))
+                array[i][j].place(x = 0, y = 25, height = 25, width = 25)
+                array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
+            if j == 3:
+                array[i].append(Canvas(array[i][0], background = "#B2C2BB"))
+                array[i][j].place(x = 25, y = 0, height = 25, width = 25)
+                array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
+            if j == 4:
+                array[i].append(Canvas(array[i][0], background = "#B2C2BB"))
+                array[i][j].place(x = 25, y = 25, height = 25, width = 25)
+                array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
+    return array
 
 
 ROOT.mainloop()
