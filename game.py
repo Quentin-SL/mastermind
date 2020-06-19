@@ -12,8 +12,8 @@ ROOT.configure(background = '#050A02')
 ROOT.title("Mastermind")
 ROOT.geometry('%dx%d' %(ws,hs)) 
 
-Button(ROOT, text = "Test the line", command = game.test_row).place(relx = 0.45, rely = 0.3)
-Button(ROOT, text = "Erase the line", command = game.backspace_row).place(relx = 0.45, rely = 0.4)
+Button(ROOT, text = "Test the line", command = lambda : game.test_row()).place(relx = 0.45, rely = 0.3)
+Button(ROOT, text = "Erase the line", command = lambda : game.backspace_row()).place(relx = 0.45, rely = 0.4)
 
 def define_number() :
     array = []
@@ -60,6 +60,28 @@ def define_hint() :
                 array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
     return array
 
+number = define_number()
+color = define_color()
+hint = define_hint()
+
+color[0][0].create_oval(25+10,25+10,25-10,25-10, fill = "red")
+
+def test_switch_color(color,test_button):
+    color[0][0].delete("all") # detruit toute les formes 
+    color[game.actual_pos-1][0].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
+    test_button.destroy() #disparait le button
+    
+
+test_button = Button(ROOT, text = "test_couleur", command = lambda : test_switch_color(color,test_button))
+test_button.place(relx = 0.45, rely = 0.6)
+
 
 ROOT.mainloop()
 
+""" TODO
+placer les pions de couleur et les rendre interagissable
+fonction callback pour placer en back et en front un pion dans le plateau 
+fonction callback pour effacer en back et en front les pions dans le plateau 
+fonction callback qui test en back la ligne et en front placer les pions d'indice 
+fonction callback de victoire et de defaite 
+"""
