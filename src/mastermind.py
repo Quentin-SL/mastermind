@@ -49,3 +49,5 @@ class Mastermind:
             self.actual_pos+=1
             return False
         
+    def get_actual_pos(self):
+        return actual_pos
