@@ -5,6 +5,7 @@ game = Mastermind()
 
 ROOT = Tk()
 counter_paw = 0 #compteur de pions par ligne 0=>3
+victory = False
 
 hs = ROOT.winfo_screenheight()
 ws = ROOT.winfo_screenwidth()
@@ -13,7 +14,7 @@ ROOT.configure(background = '#050A02')
 ROOT.title("Mastermind")
 ROOT.geometry('%dx%d' %(ws,hs)) 
 
-Button(ROOT, text = "Test the line", command = lambda : game.test_row()).place(relx = 0.45, rely = 0.3)
+Button(ROOT, text = "Test the line", command = lambda : test_row()).place(relx = 0.45, rely = 0.3)
 Button(ROOT, text = "Erase the line", command = lambda : erase_row()).place(relx = 0.45, rely = 0.4)
 
 def define_number() :
@@ -60,6 +61,7 @@ def define_hint() :
                 array[i][j].place(x = 25, y = 25, height = 25, width = 25)
                 array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
     return array
+
 def erase_row():
     global game
     global color_block
@@ -79,6 +81,21 @@ def add_color(event,color,hexa):
         color_block[game.actual_pos-1][counter_paw].delete("all")
         color_block[game.actual_pos-1][counter_paw].create_oval(25+10,25+10,25-10,25-10, fill = hexa)
         counter_paw+=1
+
+def test_row():
+    global counter_paw
+    global game
+    global hint_block
+    global victory
+    game.test_row()
+    for i in range(5,9):
+        hint_block[game.actual_pos-1][i-4].delete("all")
+        if game.board_game[game.actual_pos-1][i-4] == 1 :
+            hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "red")
+        else :
+            hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "white")
+    counter_paw = 0
+    victory = game.victory_condition()
 
 
 def button_color():
@@ -111,6 +128,8 @@ color_block = define_color()
 hint_block = define_hint()
 buttons_block = button_color()
 
+game.push_hidden_random()
+
 def test_switch_color(event,color):
     color[0][0].delete("all") # detruit toute les formes 
     color[game.actual_pos-1][0].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
@@ -120,17 +139,9 @@ def test_switch_color(event,color):
 #test_button = Button(ROOT, text = "test_couleur", command = lambda : test_switch_color(event,color,test_button))
 #test_button.place(relx = 0.45, rely = 0.6)
 
-#red_button = Canvas(ROOT, background = "#050A02",highlightthickness= 0)
-#red_button.place(relx = 0.1, y = 37.5, height = 50, width = 50)
-#red_button.create_oval(25+10,25+10,25-10,25-10, fill = "red")
-#red_button.bind('<Button-1>', lambda event: test_switch_color(event,color,test_button))
-
 ROOT.mainloop()
 
 """ TODO
-placer les pions de couleur et les rendre interagissable
-fonction callback pour placer en back et en front un pion dans le plateau 
-fonction callback pour effacer en back et en front les pions dans le plateau 
 fonction callback qui test en back la ligne et en front placer les pions d'indice 
 fonction callback de victoire et de defaite 
 """
