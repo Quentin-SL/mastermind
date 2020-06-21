@@ -14,7 +14,7 @@ ROOT.title("Mastermind")
 ROOT.geometry('%dx%d' %(ws,hs)) 
 
 Button(ROOT, text = "Test the line", command = lambda : game.test_row()).place(relx = 0.45, rely = 0.3)
-Button(ROOT, text = "Erase the line", command = lambda : game.backspace_row()).place(relx = 0.45, rely = 0.4)
+Button(ROOT, text = "Erase the line", command = lambda : erase_row()).place(relx = 0.45, rely = 0.4)
 
 def define_number() :
     array = []
@@ -60,13 +60,24 @@ def define_hint() :
                 array[i][j].place(x = 25, y = 25, height = 25, width = 25)
                 array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
     return array
-
-def add_color(event,board,back,color,pos,hexa):
+def erase_row():
+    global game
+    global color_block
     global counter_paw
-    if(pos<4):
-        back.add_color_row(color,pos+1)
-        board[back.actual_pos-1][pos].delete("all")
-        board[back.actual_pos-1][pos].create_oval(25+10,25+10,25-10,25-10, fill = hexa)
+    game.backspace_row()
+    for i in range(4):
+        color_block[game.actual_pos-1][i].delete("all")
+        color_block[game.actual_pos-1][i].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
+    counter_paw = 0
+
+def add_color(event,color,hexa):
+    global game
+    global color_block
+    global counter_paw
+    if(counter_paw<4):
+        game.add_color_row(color,counter_paw+1)
+        color_block[game.actual_pos-1][counter_paw].delete("all")
+        color_block[game.actual_pos-1][counter_paw].create_oval(25+10,25+10,25-10,25-10, fill = hexa)
         counter_paw+=1
 
 
@@ -77,30 +88,28 @@ def button_color():
         array[i].place(relx = 0.1 + 0.035 * i, y = 37.5, height = 50, width = 50)
         if i == 0 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "red")
-            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,1,counter_paw,"red"))
+            array[i].bind('<Button-1>', lambda event: add_color(event,1,"red"))
         if i == 1 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "blue")
-            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,2,counter_paw,"blue"))
+            array[i].bind('<Button-1>', lambda event: add_color(event,2,"blue"))
         if i == 2 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "yellow")
-            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,3,counter_paw,"yellow"))
+            array[i].bind('<Button-1>', lambda event: add_color(event,3,"yellow"))
         if i == 3 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "purple")
-            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,4,counter_paw,"purple"))
+            array[i].bind('<Button-1>', lambda event: add_color(event,4,"purple"))
         if i == 4 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "orange")
-            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,5,counter_paw,"orange"))   
+            array[i].bind('<Button-1>', lambda event: add_color(event,5,"orange"))   
         if i == 5 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "green")
-            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,6,counter_paw,"green"))
+            array[i].bind('<Button-1>', lambda event: add_color(event,6,"green"))
     return array
 
-number = define_number()
-color = define_color()
-hint = define_hint()
-buttons = button_color()
-
-color[0][0].create_oval(25+10,25+10,25-10,25-10, fill = "red")
+number_block = define_number()
+color_block = define_color()
+hint_block = define_hint()
+buttons_block = button_color()
 
 def test_switch_color(event,color):
     color[0][0].delete("all") # detruit toute les formes 
