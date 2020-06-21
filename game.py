@@ -4,6 +4,7 @@ from tkinter import *
 game = Mastermind()
 
 ROOT = Tk()
+counter_paw = 0 #compteur de pions par ligne 0=>3
 
 hs = ROOT.winfo_screenheight()
 ws = ROOT.winfo_screenwidth()
@@ -60,26 +61,39 @@ def define_hint() :
                 array[i][j].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
     return array
 
+def add_color(event,board,back,color,pos,hexa):
+    global counter_paw
+    if(pos<4):
+        back.add_color_row(color,pos+1)
+        board[back.actual_pos-1][pos].delete("all")
+        board[back.actual_pos-1][pos].create_oval(25+10,25+10,25-10,25-10, fill = hexa)
+        counter_paw+=1
+
+
 def button_color():
     array = []
     for i in range(6) :
-        array.append([])
-        array[i].append(Canvas(ROOT, background = "#050A02",highlightthickness= 0))
-        array[i].place(relx = 0.1, y = 37.5, height = 50, width = 50)
-        array[i].create_oval(25+10,25+10,25-10,25-10, fill = "red")
-        array[i].bind('<Button-1>', lambda event: test_switch_color(event,color,test_button))
-        #if i == 0 :
-            #buttons[i].create_oval(fill = "red")    
-        #if i == 1 :
-            
-        #if i == 2 :
-            
-        #if i == 3 :
-            
-        #if i == 4 :
-               
-        #if i == 5 :
-    return array[i]
+        array.append(Canvas(ROOT, background = "#050A02",highlightthickness= 0))
+        array[i].place(relx = 0.1 + 0.035 * i, y = 37.5, height = 50, width = 50)
+        if i == 0 :
+            array[i].create_oval(25+10,25+10,25-10,25-10, fill = "red")
+            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,1,counter_paw,"red"))
+        if i == 1 :
+            array[i].create_oval(25+10,25+10,25-10,25-10, fill = "blue")
+            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,2,counter_paw,"blue"))
+        if i == 2 :
+            array[i].create_oval(25+10,25+10,25-10,25-10, fill = "yellow")
+            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,3,counter_paw,"yellow"))
+        if i == 3 :
+            array[i].create_oval(25+10,25+10,25-10,25-10, fill = "purple")
+            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,4,counter_paw,"purple"))
+        if i == 4 :
+            array[i].create_oval(25+10,25+10,25-10,25-10, fill = "orange")
+            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,5,counter_paw,"orange"))   
+        if i == 5 :
+            array[i].create_oval(25+10,25+10,25-10,25-10, fill = "green")
+            array[i].bind('<Button-1>', lambda event: add_color(event,color,game,6,counter_paw,"green"))
+    return array
 
 number = define_number()
 color = define_color()
@@ -88,14 +102,14 @@ buttons = button_color()
 
 color[0][0].create_oval(25+10,25+10,25-10,25-10, fill = "red")
 
-def test_switch_color(event,color,test_button):
+def test_switch_color(event,color):
     color[0][0].delete("all") # detruit toute les formes 
     color[game.actual_pos-1][0].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
-    test_button.destroy() #disparait le button
+    #test_button.destroy() #disparait le button
     
 
-test_button = Button(ROOT, text = "test_couleur", command = lambda : test_switch_color(color,test_button))
-test_button.place(relx = 0.45, rely = 0.6)
+#test_button = Button(ROOT, text = "test_couleur", command = lambda : test_switch_color(event,color,test_button))
+#test_button.place(relx = 0.45, rely = 0.6)
 
 #red_button = Canvas(ROOT, background = "#050A02",highlightthickness= 0)
 #red_button.place(relx = 0.1, y = 37.5, height = 50, width = 50)
