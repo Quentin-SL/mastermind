@@ -90,7 +90,7 @@ def test_row():
     game.test_row()
     for i in range(5,9):
         hint_block[game.actual_pos-1][i-4].delete("all")
-        if game.board_game[game.actual_pos-1][i-4] == 1 :
+        if game.board_game[game.actual_pos-1][i] == 1 :
             hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "red")
         else :
             hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "white")
