@@ -4,7 +4,7 @@ from tkinter import *
 game = Mastermind()
 
 ROOT = Tk()
-counter_paw = 0 #compteur de pions par ligne 0=>3
+counter_paw = 0 #compteur de pions par ligne 0=>4
 victory = False
 
 hs = ROOT.winfo_screenheight()
@@ -22,7 +22,7 @@ def define_number() :
     for i in range(10) :
         array.append(Canvas(ROOT, background = "#B2C2BB",highlightthickness= 0))
         array[i].place(relx = 0.1, y = 100 + 52 * i, height = 50, width = 50)
-        array[i].create_text(25, 25, text = str(game.board_game[i][0]))
+        array[i].create_text(25, 25, text = str(game.get_board_game()[i][0]))
     return array
 
 
@@ -66,20 +66,22 @@ def erase_row():
     global game
     global color_block
     global counter_paw
+
     game.backspace_row()
     for i in range(4):
-        color_block[game.actual_pos-1][i].delete("all")
-        color_block[game.actual_pos-1][i].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
+        color_block[game.get_actual_pos()-1][i].delete("all")
+        color_block[game.get_actual_pos()-1][i].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
     counter_paw = 0
 
 def add_color(event,color,hexa):
     global game
     global color_block
     global counter_paw
+
     if(counter_paw<4):
         game.add_color_row(color,counter_paw+1)
-        color_block[game.actual_pos-1][counter_paw].delete("all")
-        color_block[game.actual_pos-1][counter_paw].create_oval(25+10,25+10,25-10,25-10, fill = hexa)
+        color_block[game.get_actual_pos()-1][counter_paw].delete("all")
+        color_block[game.get_actual_pos()-1][counter_paw].create_oval(25+10,25+10,25-10,25-10, fill = hexa)
         counter_paw+=1
 
 def test_row():
@@ -87,17 +89,19 @@ def test_row():
     global game
     global hint_block
     global victory
-    game.test_row()
-    for i in range(5,9):
-        hint_block[game.actual_pos-1][i-4].delete("all")
-        if game.board_game[game.actual_pos-1][i] == 1 :
-            hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "red")
-        elif game.board_game[game.actual_pos-1][i] == -1 :
-            hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "white")
-        else :
-            hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
-    counter_paw = 0
-    victory = game.victory_condition()
+
+    if counter_paw == 4:
+        game.test_row()
+        for i in range(5,9):
+            hint_block[game.get_actual_pos()-1][i-4].delete("all")
+            if game.get_board_game()[game.get_actual_pos()-1][i] == 1 :
+                hint_block[game.get_actual_pos()-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "red")
+            elif game.get_board_game()[game.get_actual_pos()-1][i] == -1 :
+                hint_block[game.get_actual_pos()-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "white")
+            else :
+                hint_block[game.get_actual_pos()-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
+        counter_paw = 0
+        victory = game.victory_condition()
 
 
 def button_color():
@@ -134,12 +138,8 @@ game.push_hidden_random()
 
 def test_switch_color(event,color):
     color[0][0].delete("all") # detruit toute les formes 
-    color[game.actual_pos-1][0].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
+    color[game.get_actual_pos()-1][0].create_oval(25+2,25+2,25-2,25-2, fill = "#000000")
     #test_button.destroy() #disparait le button
-    
-
-#test_button = Button(ROOT, text = "test_couleur", command = lambda : test_switch_color(event,color,test_button))
-#test_button.place(relx = 0.45, rely = 0.6)
 
 ROOT.mainloop()
 

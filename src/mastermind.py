@@ -50,4 +50,7 @@ class Mastermind:
             return False
         
     def get_actual_pos(self):
-        return actual_pos
+        return self.actual_pos
+
+    def get_board_game(self):
+        return self.board_game
