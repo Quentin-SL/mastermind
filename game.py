@@ -92,8 +92,10 @@ def test_row():
         hint_block[game.actual_pos-1][i-4].delete("all")
         if game.board_game[game.actual_pos-1][i] == 1 :
             hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "red")
-        else :
+        elif game.board_game[game.actual_pos-1][i] == -1 :
             hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "white")
+        else :
+            hint_block[game.actual_pos-1][i-4].create_oval(12.5+5,12.5+5,12.5-5,12.5-5, fill = "black")
     counter_paw = 0
     victory = game.victory_condition()
 
@@ -117,7 +119,7 @@ def button_color():
             array[i].bind('<Button-1>', lambda event: add_color(event,4,"purple"))
         if i == 4 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "orange")
-            array[i].bind('<Button-1>', lambda event: add_color(event,5,"orange"))   
+            array[i].bind('<Button-1>', lambda event: add_color(event,5,"orange"))
         if i == 5 :
             array[i].create_oval(25+10,25+10,25-10,25-10, fill = "green")
             array[i].bind('<Button-1>', lambda event: add_color(event,6,"green"))
