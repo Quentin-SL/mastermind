@@ -1,10 +1,10 @@
 # PROJET 1PYTH A.sc.1 2019/2020 
 
-Le jeu a réaliser est un Mastermind en Graphical User Interface dans le language Python
+Le jeu a réalisé est un Mastermind en Graphical User Interface dans le language Python
 
-## Instalattion et Execution
+## Installation et Execution
 
-### Instalattion
+### Installation
 
 Lancer votre terminal dans le dossier de votre choix puis 
 
