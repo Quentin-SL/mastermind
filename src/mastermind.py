@@ -32,7 +32,7 @@ class Mastermind:
                     break
                 elif self.board_game[self.actual_pos-1][i] == self.board_hidden[j]:
                     self.board_game[self.actual_pos-1][i+4] = -1
-                    break
+                    print(self.board_game[self.actual_pos-1], " != ")
                 j+=1
     
     def add_color_row(self,color,pos):
