@@ -4,7 +4,7 @@ class Mastermind:
     def __init__(self):
         self.board_color = [1,2,3,4,5,6]
         self.board_game = Mastermind.new_board()
-        self.board_hidden = [1,1,1,1]
+        self.board_hidden = []
         self.actual_pos = 1
 
     @staticmethod
@@ -56,3 +56,12 @@ class Mastermind:
     
     def get_board_hidden(self):
         return self.board_hidden
+    
+    def reset_board(self):
+        for row in range(10):
+            for colums in range(9):
+                if colums != 0:
+                    self.board_game[row][colums] = 0
+        for i in range(4):
+            self.board_hidden.pop()
+        self.actual_pos = 1
