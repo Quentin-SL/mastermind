@@ -25,9 +25,16 @@ answer_block = callback.define_answer(ROOT)
 
 game.push_hidden_random()
 
+def victory():
+    VICTORY = Toplevel()
+    VICTORY.title("Victoire")
+    VICTORY.geometry("800x600")
+    VICTORY.transient(ROOT) # reduction impossible du pop up
+    VICTORY.grab_set() # freeze la fenetre de jeu
+    ROOT.wait_window(VICTORY) # freeze la mainloop du jeu
+
 ROOT.mainloop()
 
 """ TODO
-fonction callback qui test en back la ligne et en front placer les pions d'indice 
 fonction callback de victoire et de defaite 
 """

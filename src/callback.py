@@ -139,3 +139,11 @@ class Callback():
 
     def get_victory(self):
         return self.victory
+
+    def victory_popup():
+        VICTORY = Toplevel()
+        VICTORY.title("Victoire")
+        VICTORY.geometry("800x600")
+        VICTORY.transient(ROOT)
+        VICTORY.grab_set()
+        ROOT.wait_window(VICTORY)
