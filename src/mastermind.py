@@ -4,7 +4,7 @@ class Mastermind:
     def __init__(self):
         self.board_color = [1,2,3,4,5,6]
         self.board_game = Mastermind.new_board()
-        self.board_hidden = [1,2,3,4]
+        self.board_hidden = []
         self.actual_pos = 1
 
     @staticmethod
@@ -33,6 +33,8 @@ class Mastermind:
                 elif self.board_game[self.actual_pos-1][i] == self.board_hidden[j]:
                     self.board_game[self.actual_pos-1][i+4] = -1
                     break
+                if j == len(self.board_hidden)-1:
+                    self.board_game[self.actual_pos-1][i+4] = 0
                 j+=1
     
     def add_color_row(self,color,pos):
