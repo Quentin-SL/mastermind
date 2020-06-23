@@ -1,4 +1,5 @@
-from tkinter import Canvas
+from tkinter import *
+import sys
 from functools import partial
 
 class Callback():
@@ -128,7 +129,7 @@ class Callback():
         func = switcher.get(number)
         return func()
 
-    def victory_condition(self,hint_block,answer_block):
+    def victory_condition(self,hint_block,answer_block,window):
         if self.counter_paw == 4:
             self.test_row(hint_block)
             self.victory = self.game.victory_condition()
@@ -136,14 +137,44 @@ class Callback():
                 for i in range(len(self.game.get_board_hidden())):
                     answer_block[i].delete("all")
                     self.switch_draw_answer(self.game.get_board_hidden()[i],i,answer_block)
+                self.victory_popup(window)
+            elif self.game.get_actual_pos() > 10 :
+                for i in range(len(self.game.get_board_hidden())):
+                    answer_block[i].delete("all")
+                    self.switch_draw_answer(self.game.get_board_hidden()[i],i,answer_block)
+                self.gameover_popup(window)
 
     def get_victory(self):
         return self.victory
 
-    def victory_popup():
-        VICTORY = Toplevel()
+    def victory_popup(self,window):
+        VICTORY = Toplevel(window)
         VICTORY.title("Victoire")
-        VICTORY.geometry("800x600")
-        VICTORY.transient(ROOT)
+        VICTORY.config(background = "#050A02")
+        VICTORY.geometry("%dx%d+%d+%d" % (500,200,window.winfo_screenwidth()/2,window.winfo_screenheight()/2))
+        img_victory = Canvas(VICTORY, background = "#050A02", highlightthickness= 0)
+        img_victory.place(x = 125, y = 50, height = 100,width = 250)
+        img_victory.create_text(125,50,text= "VICTOIRE !",fill = "white")
+        Button(VICTORY, text = "Quitter", command = lambda : self.destroy_window(window,VICTORY)).place(x = 275, y = 160, height = 25,width = 75)
+        VICTORY.transient(window)
         VICTORY.grab_set()
-        ROOT.wait_window(VICTORY)
+        window.wait_window(VICTORY)
+        
+
+    def gameover_popup(self,window):
+        GAMEOVER = Toplevel(window)
+        GAMEOVER.title("Game Over")
+        GAMEOVER.config(background = "#050A02")
+        GAMEOVER.geometry("%dx%d+%d+%d" % (500,200,window.winfo_screenwidth()/2,window.winfo_screenheight()/2))
+        img_gameover = Canvas(GAMEOVER, background = "#050A02", highlightthickness= 0)
+        img_gameover.place(x = 125, y = 50, height = 100,width = 250)
+        img_gameover.create_text(125,50,text= "GAME OVER !",fill = "white")
+        Button(GAMEOVER, text = "Quitter", command = lambda : self.destroy_window(window,GAMEOVER)).place(x = 275, y = 160, height = 25,width = 75)
+        GAMEOVER.transient(window)
+        GAMEOVER.grab_set()
+        window.wait_window(GAMEOVER)
+
+    def destroy_window(self,window,sub_window):
+        sub_window.destroy()
+        window.destroy()
+        sys.exit(0)

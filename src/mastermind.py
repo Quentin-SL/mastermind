@@ -4,7 +4,7 @@ class Mastermind:
     def __init__(self):
         self.board_color = [1,2,3,4,5,6]
         self.board_game = Mastermind.new_board()
-        self.board_hidden = []
+        self.board_hidden = [1,1,1,1]
         self.actual_pos = 1
 
     @staticmethod
