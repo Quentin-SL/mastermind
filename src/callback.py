@@ -129,7 +129,7 @@ class Callback():
         func = switcher.get(number)
         return func()
 
-    def victory_condition(self,hint_block,answer_block,window):
+    def victory_condition(self,hint_block,answer_block,color_block,window):
         if self.counter_paw == 4:
             self.test_row(hint_block)
             self.victory = self.game.victory_condition()
@@ -137,17 +137,17 @@ class Callback():
                 for i in range(len(self.game.get_board_hidden())):
                     answer_block[i].delete("all")
                     self.switch_draw_answer(self.game.get_board_hidden()[i],i,answer_block)
-                self.victory_popup(window)
+                self.victory_popup(window,hint_block,color_block,answer_block)
             elif self.game.get_actual_pos() > 10 :
                 for i in range(len(self.game.get_board_hidden())):
                     answer_block[i].delete("all")
                     self.switch_draw_answer(self.game.get_board_hidden()[i],i,answer_block)
-                self.gameover_popup(window)
+                self.gameover_popup(window,hint_block,color_block,answer_block)
 
     def get_victory(self):
         return self.victory
 
-    def victory_popup(self,window):
+    def victory_popup(self,window,hint_block,color_block,answer_block):
         VICTORY = Toplevel(window)
         VICTORY.title("Victoire")
         VICTORY.config(background = "#050A02")
@@ -156,12 +156,13 @@ class Callback():
         img_victory.place(x = 125, y = 50, height = 100,width = 250)
         img_victory.create_text(125,50,text= "VICTOIRE !",fill = "white")
         Button(VICTORY, text = "Quitter", command = lambda : self.destroy_window(window,VICTORY)).place(x = 275, y = 160, height = 25,width = 75)
+        Button(VICTORY, text = "ReJouer", command = lambda : self.reset_window(VICTORY,hint_block,color_block,answer_block)).place(x = 185, y = 160, height = 25,width = 75)
         VICTORY.transient(window)
         VICTORY.grab_set()
         window.wait_window(VICTORY)
         
 
-    def gameover_popup(self,window):
+    def gameover_popup(self,window,hint_block,color_block,answer_block):
         GAMEOVER = Toplevel(window)
         GAMEOVER.title("Game Over")
         GAMEOVER.config(background = "#050A02")
@@ -170,6 +171,7 @@ class Callback():
         img_gameover.place(x = 125, y = 50, height = 100,width = 250)
         img_gameover.create_text(125,50,text= "GAME OVER !",fill = "white")
         Button(GAMEOVER, text = "Quitter", command = lambda : self.destroy_window(window,GAMEOVER)).place(x = 275, y = 160, height = 25,width = 75)
+        Button(GAMEOVER, text = "ReJouer", command = lambda : self.reset_window(GAMEOVER,hint_block,color_block,answer_block)).place(x = 185, y = 160, height = 25,width = 75)
         GAMEOVER.transient(window)
         GAMEOVER.grab_set()
         window.wait_window(GAMEOVER)
@@ -178,3 +180,17 @@ class Callback():
         sub_window.destroy()
         window.destroy()
         sys.exit(0)
+
+    def reset_window(self,sub_window,hint_block,color_block,answer_block):
+        sub_window.destroy()
+        self.game.reset_board()
+        self.game.push_hidden_random()
+        for row in range(10):
+            for colums in range(4):
+                hint_block[row][colums+1].delete("all")
+                color_block[row][colums].delete("all")
+                hint_block[row][colums+1].create_oval(12.5+5, 12.5+5, 12.5-5, 12.5-5, fill = "#000000")
+                color_block[row][colums].create_oval(25+2, 25+2, 25-2, 25-2, fill = "#000000")
+        for row in range(4):
+            answer_block[row].delete("all")
+            answer_block[row].create_oval(25+2, 25+2, 25-2, 25-2, fill = "#FFFFFF")
