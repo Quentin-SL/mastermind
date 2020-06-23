@@ -137,4 +137,5 @@ class Callback():
                     answer_block[i].delete("all")
                     self.switch_draw_answer(self.game.get_board_hidden()[i],i,answer_block)
 
-
+    def get_victory(self):
+        return self.victory
